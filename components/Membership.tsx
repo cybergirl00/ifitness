@@ -1,6 +1,15 @@
+'use client'
 import { Button } from "./ui/button";
+import { useUser } from '@clerk/nextjs'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import PaystackPop from '@paystack/inline-js';
 
+const paystackInstance = new PaystackPop();
 const Membership = () => {
+    const router = useRouter();
+    const [phone, setPhone] = useState('')
+    const { user } = useUser()
     const plans = [
         {
             name: "Basic plan",
@@ -43,6 +52,64 @@ const Membership = () => {
             ],
         },
     ];
+    const onSuccess = async  () => {
+        const subscriptionResponse = await fetch('/api/subscription', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ customer: user?.emailAddresses[0].emailAddress }),
+          });
+  
+          if (subscriptionResponse.ok) {
+            const data = await subscriptionResponse.json();
+            return data;
+          } else {
+            console.error('Failed to create subscription');
+          }
+    }
+    
+    const subscribe = async () => {
+        if (user) {
+          try {
+            // CREATE USER INSIDE PAYSTACK
+            const customerResponse = await fetch('/api/customer', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+      
+            if (customerResponse.ok) {
+              // THEN CREATE SUBSCRIPTION
+              const handler = PaystackPop.setup({
+                key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!, // Make sure the key exists
+                email: user?.emailAddresses[0].emailAddress!,
+                amount: 10000 * 100, // Amount is in kobo, so multiply by 100
+                currency: 'NGN',
+                callback: function (response: any) {
+                    const reference = response.reference;
+                    // Handle successful payment
+                    onSuccess(reference: any);
+                },
+                onClose: function () {
+                    alert('Payment was not completed');
+                },
+            });
+
+            handler.openIframe();
+            } else {
+              console.error('Failed to create customer');
+            }
+          } catch (error) {
+            console.log('Error:', error);
+          }
+        } else {
+          router.push('/sign-in');
+        }
+      };
+      
+
   return (
     <section className='py-14'>
     <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
@@ -88,7 +155,9 @@ const Membership = () => {
                             }
                         </ul>
                         <div className="flex-1 flex items-end">
-                            <Button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white'>
+                        <Button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white'
+                        onClick={subscribe}
+                   >
                                 Get Started
                             </Button>
                         </div>

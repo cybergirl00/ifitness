@@ -32,7 +32,7 @@ export const createUser = internalMutation({
       imageUrl: args.imageUrl,
       name: args.name,
       subscription: args.subscription,
-    });
+    })
   },
 });
 
