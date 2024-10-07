@@ -9,5 +9,10 @@ export default defineSchema({
         email: v.string(),
         imageUrl: v.string(),
         subscription: v.string(),
-    })
+    }),
+    emails: defineTable({
+        fromName: v.string(),
+        fromEmail: v.string(),
+        message: v.string(), 
+    }),
 })

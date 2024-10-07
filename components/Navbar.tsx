@@ -4,8 +4,11 @@ import { buttonVariants } from "./ui/button"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useUser } from '@clerk/nextjs'
 
 const Navbar = () => {
+    const { user } =  useUser();
+    console.log(user)
    
     const pathname = usePathname();
 
@@ -18,6 +21,13 @@ const Navbar = () => {
         </div>
 
         <div className="">
+        <div className="">
+                    {user && user?.emailAddresses[0].emailAddress === process.env.ADMIN && (
+                        <Link href='/dashboard' className='text-primary'>
+                            Dashboard
+                        </Link>
+                    ) }
+                </div>
             <SignedIn>
                 <UserButton />
             </SignedIn>
@@ -29,7 +39,6 @@ const Navbar = () => {
             })}>Sign in</Link>
             <Link href='/sign-up'  className={buttonVariants({
                 variant: 'default',
-                // className: 'text-red-500'
             })}>Get Started</Link>
             
         </div>

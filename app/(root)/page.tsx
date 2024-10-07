@@ -1,4 +1,6 @@
+import Contact from "@/components/Contact"
 import Hero from "@/components/Hero"
+import Membership from "@/components/Membership"
 import Popular from "@/components/Popular"
 import Testimonials from "@/components/Testimonials"
 import Trainners from "@/components/Trainners"
@@ -22,6 +24,10 @@ const Home = () => {
       </div>
 
       <Testimonials />
+
+      <Membership />
+
+      <Contact />
     </div>
   )
 }
