@@ -20,3 +20,8 @@ export const trainners = [
         about: 'John is a very good and dedicated trainner'
     },
 ]
+
+export const nigerianCurrencyFormat = new Intl.NumberFormat('en-NG', { 
+    currency: 'NGN', 
+    style: 'currency', 
+});

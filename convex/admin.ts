@@ -6,7 +6,7 @@ export  const getEmails = query({
     args: {},
     handler: async (ctx, args) => {
       return  await ctx.db.query("emails")
-      .order("asc")
+      .order("desc")
         .take(5)
     }
 });
@@ -14,7 +14,7 @@ export  const getAllEmails = query({
     args: {},
     handler: async (ctx, args) => {
       return  await ctx.db.query("emails")
-      .order("asc")
+      .order("desc")
         .collect();
     }
 });

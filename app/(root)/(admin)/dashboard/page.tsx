@@ -13,12 +13,39 @@ import UsersTable from "@/components/UsersTable"
 import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image."
 
 const Dashboard = () =>  {
+  const [subscriptions, setSubscriptions] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const emails = useQuery(api.admin.getAllEmails);
+
+  useEffect(() => {
+    const fetchSubscriptions = async () => {
+      try {
+        const response = await fetch('/api/fetchall', {
+          method: 'GET',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch subscriptions');
+        }
+        const data = await response.json();
+        console.log(data)
+        setSubscriptions(data.data); // Assuming the Paystack API returns subscriptions in data.data
+      } catch (error) {
+        console.error('Error fetching subscriptions:', error);
+        toast.error('Error fetching subscription details.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSubscriptions();
+  }, []);
   return (
     <div className="flex min-h-screen w-full flex-col">
       <Header />
@@ -47,10 +74,7 @@ const Dashboard = () =>  {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+2350</div>
-              <p className="text-xs text-muted-foreground">
-                +180.1% from last month
-              </p>
+              <div className="text-2xl font-bold">+{subscriptions?.length}</div>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
@@ -66,14 +90,13 @@ const Dashboard = () =>  {
           </Card>
           <Card x-chunk="dashboard-01-chunk-3">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+              <CardTitle className="text-sm font-medium">Reviews</CardTitle>
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+573</div>
-              <p className="text-xs text-muted-foreground">
-                +201 since last hour
-              </p>
+              <div className="text-2xl font-bold">
+                <Link href='/reviews'>0</Link>
+              </div>
             </CardContent>
           </Card>
         </div>
