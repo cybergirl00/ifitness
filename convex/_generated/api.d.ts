@@ -15,6 +15,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as admin from "../admin.js";
 import type * as email from "../email.js";
 import type * as http from "../http.js";
 import type * as membership from "../membership.js";
@@ -29,6 +30,7 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  admin: typeof admin;
   email: typeof email;
   http: typeof http;
   membership: typeof membership;

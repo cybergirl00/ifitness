@@ -31,8 +31,8 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
         <div className="">
                     {user && user?.emailAddresses[0].emailAddress === admin && (
-                        <Link href='/dashboard' className='text-primary font-bold hover:underline'>
-                            Dashboard
+                        <Link href={pathname === '/' ? '/dashboard' : '/'} className='text-primary font-bold hover:underline'>
+                            {pathname === '/' ? 'Dashboard' : 'Home'}
                         </Link>
                     ) }
                 </div>
