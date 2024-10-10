@@ -5,8 +5,10 @@ import Popular from "@/components/Popular"
 import Testimonials from "@/components/Testimonials"
 import Trainners from "@/components/Trainners"
 import Transformations from "@/components/Transformations"
+import { toast } from "sonner"
 
 const Home = () => {
+
   return (
     <div>
       <div className="">

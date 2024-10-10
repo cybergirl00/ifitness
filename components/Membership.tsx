@@ -1,21 +1,25 @@
 'use client';
 import { Button } from "./ui/button";
 import { useUser } from '@clerk/nextjs';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PaystackPop from '@paystack/inline-js';
 import { toast } from "sonner";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Loader } from "lucide-react";
+import UserSubscription from "./UserSubscription";
 
 const Membership = () => {
     const router = useRouter();
+    const clerkId = localStorage.getItem('clerkId');
     const [isLoading, setIsLoading] = useState(false);
-    const [plan, setPlan] = useState('');
+    const [selectedPlan, setSelectedPlan] = useState(''); 
+    const [usersDb, setUsersDb] = useState();
     const { user } = useUser();
     const updateUser = useMutation(api.users.updateSub);
-
+    const userdb = useQuery(api.users.getUserById, {clerkId })
+    console.log(userdb)
     const plans = [
         {
             name: "Basic plan",
@@ -57,11 +61,11 @@ const Membership = () => {
             ],
         },
     ];
-
+    
     // PLAN CODES
-    const basicPlan ="PLN_fdim4sgxz70dzto"
-    const premiumPlan = 'PLN_6lzajvdosrg3no2'
-    const mediumPlan = "PLN_2hi2jrdpazj04zh"
+    const basicPlan = "PLN_fdim4sgxz70dzto";
+    const premiumPlan = 'PLN_6lzajvdosrg3no2';
+    const mediumPlan = "PLN_2hi2jrdpazj04zh";
 
     const onSuccess = async (planCode: string, selectedPlan: string) => {
         setIsLoading(true);
@@ -95,32 +99,31 @@ const Membership = () => {
             toast.error("Failed to create subscription.");
         } finally {
             setIsLoading(false);
+            setSelectedPlan(''); // Reset the selected plan
         }
     };
-    
-    
-
-    const subscribe = async (selectedPlan: string, price: number) => {
+    const subscribe = async (planName: string, price: number) => {
         try {
             setIsLoading(true);
+            setSelectedPlan(planName); // Set the selected plan
+
             let planCode = '';
-    
+
             // Set planCode based on the selected plan
-            switch (selectedPlan) {
+            switch (planName) {
                 case 'Basic plan':
-                    planCode = basicPlan || '';
+                    planCode = basicPlan;
                     break;
                 case 'Medium plan':
-                    planCode = mediumPlan || '';
+                    planCode = mediumPlan;
                     break;
                 case 'Premium Plan':
-                    planCode = premiumPlan || ''; 
+                    planCode = premiumPlan;
                     break;
                 default:
                     planCode = '';
             }
-            console.log(planCode)
-    
+
             if (user) {
                 // Create user inside Paystack
                 const customerResponse = await fetch('/api/customer', {
@@ -129,10 +132,10 @@ const Membership = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-    
+
                 if (customerResponse.ok) {
                     toast("Customer created.");
-    
+
                     // Initialize Paystack
                     const handler = PaystackPop.setup({
                         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
@@ -141,14 +144,14 @@ const Membership = () => {
                         currency: 'NGN',
                         callback: async function (response: any) {
                             const reference = response.reference;
-                            await onSuccess(planCode, selectedPlan); // Pass the actual planCode to onSuccess
+                            await onSuccess(planCode, planName); // Pass the actual planCode to onSuccess
                         },
                         onClose: function () {
                             toast.error("Payment was not completed.");
                             setIsLoading(false);
                         },
                     });
-    
+
                     handler.openIframe(); // Open the payment modal
                 } else {
                     toast.error("Failed to create customer.");
@@ -163,8 +166,10 @@ const Membership = () => {
             setIsLoading(false);
         }
     };
-    
 
+
+if (user && userdb &&  userdb?.subscription != 'standard') return <UserSubscription userdb={userdb} />;
+   
     return (
         <section className='py-14'>
             <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
@@ -210,9 +215,9 @@ const Membership = () => {
                                 <Button
                                     className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white'
                                     onClick={() => subscribe(item.name, item.price)}
-                                    disabled={isLoading}
+                                    disabled={isLoading} // Disable only the selected plan's button
                                 >
-                                    {isLoading ? (
+                                    {isLoading && selectedPlan === item.name ? (
                                         <Loader className="animate-spin h-4 w-4" />
                                     ) : 'Get Started'}
                                 </Button>

@@ -5,12 +5,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useUser } from '@clerk/nextjs'
+import { useEffect } from "react";
 
 const Navbar = () => {
     const { user } =  useUser();
-    console.log(user)
-   
     const pathname = usePathname();
+    const admin = 'dikkorabiat25@gmail.com'
+
+    useEffect(() => {
+        if(user) {
+            localStorage.setItem('clerkId', user?.id)
+        }
+     
+    }, [user])
+    
 
     if(pathname === '/sign-in' ||   pathname === '/sign-up') return null;
   return (
@@ -20,10 +28,10 @@ const Navbar = () => {
             <h2 className='font-bold text-xl '>Fitness</h2>
         </div>
 
+        <div className="flex items-center gap-3">
         <div className="">
-        <div className="">
-                    {user && user?.emailAddresses[0].emailAddress === process.env.ADMIN && (
-                        <Link href='/dashboard' className='text-primary'>
+                    {user && user?.emailAddresses[0].emailAddress === admin && (
+                        <Link href='/dashboard' className='text-primary font-bold hover:underline'>
                             Dashboard
                         </Link>
                     ) }
