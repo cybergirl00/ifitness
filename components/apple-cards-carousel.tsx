@@ -233,7 +233,7 @@ export const Card = ({
                 {card.name}
               </motion.p>
               {card?.instructions.map((i) => (
-                 <div className="py-10">{i}</div>
+                 <div className="py-10" key={i}>{i}</div>
               ))}
             </motion.div>
           </div>
