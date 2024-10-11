@@ -12,15 +12,15 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
 }) => (
   <div>
   <h1 className="font-bold text-2xl">
-    Welcome, <span className="text-primary">{firstName}</span>!
+    Welcome, <span className="text-primary">New message:</span>!
   </h1>
   
   <h3>
-    Your message: <span className="text-gray-500 font-extralight">{message}</span>
+    Your message: <span className="text-gray-500 font-extralight">{firstName}  said:  {message}</span>
   </h3>
 
   <h2>
-    We’ve received your message and will get back to you as soon as possible. Thank you for reaching out to us!
+   You've recieved a message from your contact form view in the dashboard for more!
   </h2>
 </div>
 );

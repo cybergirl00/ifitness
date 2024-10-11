@@ -60,7 +60,7 @@ const Membership = () => {
   <TableBody>
 
   {subscriptions ? subscriptions.map((sub) => (
-    <TableRow>
+    <TableRow key={sub?._id}>
     <TableCell className="font-medium">{sub?.customer?.customer_code}</TableCell>
     <TableCell>{sub?.customer?.email}</TableCell>
     <TableCell className="text-right">{sub?.customer?.first_name}</TableCell>

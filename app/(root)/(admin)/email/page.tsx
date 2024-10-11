@@ -49,7 +49,7 @@ const Email = () => {
 
   <TableBody>
     {emails?.map((email) => (
-         <TableRow>
+         <TableRow key={email?._id}>
          <TableCell className="font-medium">{email?.fromName}</TableCell>
          <TableCell>{email?.fromEmail}</TableCell>
          <TableCell>{email?.message}</TableCell>

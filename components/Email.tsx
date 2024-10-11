@@ -15,7 +15,7 @@ const Email = () => {
             </CardHeader>
             <CardContent className="grid gap-8 ">
                 {emails ?  emails.map((email) => (
-                    <div className="flex items-center gap-4 cursor-pointer">
+                    <div className="flex items-center gap-4 cursor-pointer" key={email?._id}>
                     <Avatar className="hidden h-9 w-9 sm:flex">
                       <AvatarImage src="/avatars/01.png" alt="Avatar" />
                       <AvatarFallback>EM</AvatarFallback>

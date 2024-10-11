@@ -55,7 +55,7 @@ const UsersTable = () => {
         </TableHeader>
         <TableBody>
             {subscribers ? subscribers.map((sub) => (     
-                 <TableRow className='cursor-pointer'>
+                 <TableRow className='cursor-pointer' key={sub?._id}>
                 <TableCell>
                 <Link href={`/subscription/${sub?.subcode}`}>
                   <div className="font-medium">{sub?.name}</div>
