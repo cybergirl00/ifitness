@@ -92,7 +92,7 @@ const Contact = () => {
     },
 ]
   return (
-    <div>
+    <div className='pb-5'>
         <div className="p-5">
             <h2 className='text-3xl font-bold text-center'><span className='text-primary'>Contact</span> Us</h2>
         </div>

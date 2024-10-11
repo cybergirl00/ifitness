@@ -7,10 +7,12 @@ import { Label } from "@/components/ui/label"
 import { Copy, Star } from "lucide-react"  // Import the Star icon
 import { useMutation, useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
+import { toast } from "sonner";
 
 const Reviews = () => {
     const reviews = useQuery(api.admin.getAllReviews)
-    const approveReview = useMutation(api.admin.approveReview)
+    const approveReview = useMutation(api.admin.approveReview);
+    const  disApproveReview = useMutation(api.admin.disApproveReview)
 
     const approved = async (id) => {
         approveReview({
@@ -18,7 +20,7 @@ const Reviews = () => {
         })
     }
     const disApproved = async (id) => {
-        approveReview({
+        disApproveReview({
             _id: id
         })
     }
@@ -30,6 +32,16 @@ const Reviews = () => {
             stars.push(<Star key={i} className="text-primary inline" />)  // Display stars
         }
         return stars
+    }
+
+    const copy = () => {
+        navigator.clipboard.writeText('localhost:3000/addreview')
+        .then(() => {
+            toast.success('Copied to clipboard')
+        })
+        .catch(err => {
+            toast.error('Failed to copy to clipboard')
+        })
     }
 
     return (
@@ -52,7 +64,9 @@ const Reviews = () => {
                                 <Label htmlFor="link" className="sr-only">Link</Label>
                                 <Input id="link" defaultValue="localhost:3000/addreview" readOnly />
                             </div>
-                            <Button type="submit" size="sm" className="px-3">
+                            <Button type="submit" size="sm" className="px-3" 
+                            onClick={copy}
+                            >
                                 <span className="sr-only">Copy</span>
                                 <Copy className="h-4 w-4" />
                             </Button>
@@ -89,9 +103,11 @@ const Reviews = () => {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     {review?.approved === false ? (
-                                        <Button onClick={() => approved(review?._id)}>Approve</Button>
+                                        <Button onClick={() => approved(review?._id)}
+                                        className='bg-green-400'
+                                        >Approve</Button>
                                     ) : (
-                                        <Button onClick={disApproved}>Disapprove</Button>
+                                        <Button onClick={() => disApproved(review?._id)}>Disapprove</Button>
                                     )}
                                 </TableCell>
                             </TableRow>

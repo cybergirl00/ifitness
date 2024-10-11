@@ -76,3 +76,14 @@ export const approveReview = mutation({
         return await ctx.db.patch(args._id, { approved: true})
     }
 })
+
+export const disApproveReview = mutation({
+    args: {  _id: v.id("reviews") },
+    handler: async (ctx,args) => {
+       const id = await ctx.db.get(args._id)
+       if (!id) {
+        throw new ConvexError("Review not found");
+      }
+        return await ctx.db.patch(args._id, { approved: false})
+    }
+})

@@ -1,11 +1,11 @@
 import Contact from "@/components/Contact"
+import Footer from "@/components/Footer"
 import Hero from "@/components/Hero"
 import Membership from "@/components/Membership"
 import Popular from "@/components/Popular"
 import Testimonials from "@/components/Testimonials"
 import Trainners from "@/components/Trainners"
 import Transformations from "@/components/Transformations"
-import { toast } from "sonner"
 
 const Home = () => {
 
@@ -15,9 +15,9 @@ const Home = () => {
         <Hero />
       </div>
 
-      <div className="">
+      {/* <div className="">
         <Popular />
-      </div>
+      </div> */}
 
       <Trainners />
 
@@ -27,9 +27,13 @@ const Home = () => {
 
       <Testimonials />
 
+      <section id='membership'>
       <Membership />
+      </section>
 
       <Contact />
+
+      <Footer />
     </div>
   )
 }

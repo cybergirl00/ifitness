@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { Button } from "./ui/button";
 import Countdown from 'react-countdown';
 import { toast } from "sonner";
+import Membership from "./Membership";
 
 
 const UserSubscription = ({ userdb }: { userdb: any }) => {
@@ -57,7 +58,7 @@ const UserSubscription = ({ userdb }: { userdb: any }) => {
         }
   }
 }
-  
+  // if (subscription && subscription?.status != 'active' && subscription?.status === 'non-reviewing') return <Membership />
   return (
     <div className="bg-white  rounded-lg p-8 max-w-5xl mx-auto">
       <div className="text-center mb-10">
@@ -102,11 +103,17 @@ const UserSubscription = ({ userdb }: { userdb: any }) => {
             </h3>
 
           </div>
-          {/* <div className="mt-4 justify-center ">
-            <Button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md" onClick={cancelMembership}>
-              Cancel Membership
-            </Button>
-          </div> */}
+          {subscription && subscription?.status != 'active' ? (
+             <div className="mt-4 justify-center ">
+             <Button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md" onClick={cancelMembership}>
+               Renew membership
+             </Button>
+           </div>
+          ):  <div className="mt-4 justify-center ">
+          <Button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md" onClick={cancelMembership}>
+            Cancel Membership
+          </Button>
+        </div>}
         </div>
       </div>
     </div>
