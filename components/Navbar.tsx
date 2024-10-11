@@ -20,7 +20,7 @@ const Navbar = () => {
     }, [user])
     
 
-    if(pathname === '/sign-in' ||   pathname === '/sign-up') return null;
+    if(pathname === '/sign-in' ||   pathname === '/sign-up' ||  pathname ===  '/addreview') return null;
   return (
     <div className=" p-5  flex items-center justify-between sticky z-10 top-0 bg-white">
         <div className="flex items-center">

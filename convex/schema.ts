@@ -16,4 +16,12 @@ export default defineSchema({
         fromEmail: v.string(),
         message: v.string(), 
     }),
+    reviews: defineTable({
+        name: v.string(),
+        email: v.string(),
+        phone: v.string(),
+        message: v.string(),
+        rating: v.number(),
+        approved: v.boolean()
+    })
 })
