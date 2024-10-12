@@ -10,9 +10,9 @@ import Transformations from "@/components/Transformations"
 const Home = () => {
   return (
     <div>
-        {/* <Hero /> */}
+        <Hero />
 
-      <Trainners />
+      {/* <Trainners /> */}
 
       <div className="">
         <Transformations />
