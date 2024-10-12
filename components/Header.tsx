@@ -1,6 +1,6 @@
-import {   DropdownMenu, DropdownMenuContent, DropdownMenuItem,DropdownMenuLabel, DropdownMenuSeparator,  DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
+'use client'
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
+import {  Menu, Package2, Search } from "lucide-react"
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"

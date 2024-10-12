@@ -3,7 +3,6 @@ import { Card, Carousel } from './apple-cards-carousel';
 
 const Popular = async () => {
   const exercises = await getExcersice();
-//   console.log(exercises)
 
   const cards = exercises?.map((card: any, index: any) => (
     <Card key={card.gifUrl} card={card} index={index} />

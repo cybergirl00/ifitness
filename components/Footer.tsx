@@ -1,5 +1,5 @@
-import { Dumbbell } from "lucide-react"
 
+'use client'
 const Footer = () => {
     const footerNavs = [
         {
