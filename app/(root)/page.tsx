@@ -14,12 +14,12 @@ const Home = () => {
       <Trainners />
 
       
-        {/* <Transformations /> */}
+        <Transformations />
       
 
-      <Testimonials />
+      {/* <Testimonials /> */}
 
-      <section id='membership'>
+      <section>
       <Membership />
       </section>
 
