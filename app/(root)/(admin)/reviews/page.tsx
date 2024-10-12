@@ -67,7 +67,7 @@ const Reviews = () => {
                                 <Input id="link" defaultValue="localhost:3000/addreview" readOnly />
                             </div>
                             <Button type="submit" size="sm" className="px-3" 
-                            onClick={copy}
+                            // onClick={copy}
                             >
                                 <span className="sr-only">Copy</span>
                                 <Copy className="h-4 w-4" />
