@@ -9,6 +9,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Loader } from "lucide-react";
 import UserSubscription from "./UserSubscription";
+import { nigerianCurrencyFormat } from "@/data";
 
 const Membership = () => {
     const router = useRouter();
@@ -191,7 +192,7 @@ if (user && userdb &&  userdb?.subscription !== 'standard') return <UserSubscrip
                                     {item.name}
                                 </span>
                                 <div className='mt-4 text-gray-800 text-3xl font-semibold'>
-                                    ${item.price} <span className="text-xl text-gray-600 font-normal">/mo</span>
+                                    {nigerianCurrencyFormat.format(item?.price)} <span className="text-xl text-gray-600 font-normal">/mo</span>
                                 </div>
                             </div>
                             <ul className='py-8 space-y-3'>
