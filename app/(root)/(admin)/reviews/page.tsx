@@ -34,17 +34,17 @@ const Reviews = () => {
         return stars
     }
 
-    const copy = () => {
-        if (typeof window !== 'undefined') {
-            navigator.clipboard.writeText('localhost:3000/addreview')
-        .then(() => {
-            toast.success('Copied to clipboard')
-        })
-        .catch(err => {
-            toast.error('Failed to copy to clipboard')
-        })
-          }
-    }
+    // const copy = () => {
+    //     if (typeof window !== 'undefined') {
+    //         navigator.clipboard.writeText('localhost:3000/addreview')
+    //     .then(() => {
+    //         toast.success('Copied to clipboard')
+    //     })
+    //     .catch(err => {
+    //         toast.error('Failed to copy to clipboard')
+    //     })
+    //       }
+    // }
 
     return (
         <div>
