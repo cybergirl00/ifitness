@@ -1,4 +1,3 @@
-
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import Hero from "@/components/Hero"
@@ -9,7 +8,6 @@ import Trainners from "@/components/Trainners"
 import Transformations from "@/components/Transformations"
 
 const Home = () => {
-
   return (
     <div>
       <div className="">
