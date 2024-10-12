@@ -16,7 +16,7 @@ const Membership = () => {
     const [selectedPlan, setSelectedPlan] = useState(''); 
     const { user } = useUser();
     const updateUser = useMutation(api.users.updateSub);
-    const userdb = user?.id ? useQuery(api.users.getUserById, { clerkId: user.id }) : null;
+    const userdb = useQuery(api.users.getUserById, { clerkId: user?.id || '' });
 
     console.log(userdb)
     const plans = [
