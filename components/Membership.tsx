@@ -92,7 +92,7 @@ const Membership = () => {
         try {
             setIsLoading(true);
             setSelectedPlan(planName);
-            let planCode = planName === 'Basic plan' ? basicPlan : planName === 'Medium plan' ? mediumPlan : premiumPlan;
+            const planCode = planName === 'Basic plan' ? basicPlan : planName === 'Medium plan' ? mediumPlan : premiumPlan;
 
             if (user) {
                 const customerResponse = await fetch('/api/customer', {
