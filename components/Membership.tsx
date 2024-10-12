@@ -12,13 +12,12 @@ import UserSubscription from "./UserSubscription";
 
 const Membership = () => {
     const router = useRouter();
-    const clerkId = localStorage.getItem('clerkId');
     const [isLoading, setIsLoading] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState(''); 
-    const [usersDb, setUsersDb] = useState();
     const { user } = useUser();
     const updateUser = useMutation(api.users.updateSub);
-    const userdb = useQuery(api.users.getUserById, {clerkId })
+    const userdb = user &&  useQuery(api.users.getUserById, { clerkId: user?.id || '' });
+
     console.log(userdb)
     const plans = [
         {
@@ -169,7 +168,7 @@ const Membership = () => {
 
     
 
-if (user && userdb &&  userdb?.subscription != 'standard') return <UserSubscription userdb={userdb} />;
+if (user && userdb &&  userdb?.subscription !== 'standard') return <UserSubscription userdb={userdb} />;
    
     return (
         <section className='py-14'>

@@ -11,13 +11,6 @@ const Navbar = () => {
     const { user } =  useUser();
     const pathname = usePathname();
     const admin = 'dikkorabiat25@gmail.com'
-
-    useEffect(() => {
-        if(user) {
-            localStorage.setItem('clerkId', user?.id)
-        }
-     
-    }, [user])
     
 
     if(pathname === '/sign-in' ||   pathname === '/sign-up' ||  pathname ===  '/addreview') return null;

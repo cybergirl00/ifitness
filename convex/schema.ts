@@ -23,5 +23,10 @@ export default defineSchema({
         message: v.string(),
         rating: v.number(),
         approved: v.boolean()
+    }),
+    membership: defineTable({
+        type: v.string(),
+        user: v.string(),
+        subscriptioCode: v.string(),
     })
 })

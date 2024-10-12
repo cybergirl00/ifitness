@@ -1,9 +1,9 @@
-'use client'
+
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import Hero from "@/components/Hero"
 import Membership from "@/components/Membership"
-import Popular from "@/components/Popular"
+// import Popular from "@/components/Popular"
 import Testimonials from "@/components/Testimonials"
 import Trainners from "@/components/Trainners"
 import Transformations from "@/components/Transformations"

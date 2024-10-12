@@ -1,4 +1,4 @@
-import { ConvexError } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { query } from "./_generated/server";
 
 export const getUser = query({
@@ -11,3 +11,13 @@ export const getUser = query({
         return user
     }
 });
+
+
+export const getMembership = query({
+    args: { user: v.string() },
+    handler: async (ctx,args) => {
+        return await ctx.db.query("membership")
+        .filter((q) => q.eq(q.field("user"), args.user))
+        .unique();
+    }
+})
