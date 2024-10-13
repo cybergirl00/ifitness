@@ -8,8 +8,12 @@ import { Copy, Star } from "lucide-react"  // Import the Star icon
 import { useMutation, useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import { toast } from "sonner";
+import { useUser } from "@clerk/clerk-react";
+import { useRouter } from "next/navigation";
 
 const Reviews = () => {
+    const { user } = useUser();
+    const router = useRouter();
     const reviews = useQuery(api.admin.getAllReviews)
     const approveReview = useMutation(api.admin.approveReview);
     const  disApproveReview = useMutation(api.admin.disApproveReview)
@@ -34,17 +38,23 @@ const Reviews = () => {
         return stars
     }
 
-    // const copy = () => {
-    //     if (typeof window !== 'undefined') {
-    //         navigator.clipboard.writeText('localhost:3000/addreview')
-    //     .then(() => {
-    //         toast.success('Copied to clipboard')
-    //     })
-    //     .catch(err => {
-    //         toast.error('Failed to copy to clipboard')
-    //     })
-    //       }
-    // }
+    const copy = () => {
+        if (typeof window !== 'undefined') {
+            navigator.clipboard.writeText('https://ifitness-smoky.vercel.app/addreview')
+        .then(() => {
+            toast.success('Copied to clipboard')
+        })
+        .catch(err => {
+            toast.error('Failed to copy to clipboard')
+        })
+          }
+    }
+
+    if(user && user?.emailAddresses[0].emailAddress !== process.env.ADMIN) {
+        router.push('/');
+
+        return null;
+    }
 
     return (
         <div>
@@ -67,7 +77,7 @@ const Reviews = () => {
                                 <Input id="link" defaultValue="localhost:3000/addreview" readOnly />
                             </div>
                             <Button type="submit" size="sm" className="px-3" 
-                            // onClick={copy}
+                            onClick={copy}
                             >
                                 <span className="sr-only">Copy</span>
                                 <Copy className="h-4 w-4" />
