@@ -11,6 +11,8 @@ import PaystackPop from '@paystack/inline-js';
 import UserSubscription from "./UserSubscription";
 import { nigerianCurrencyFormat } from "@/data";
 
+const isBrowser = () => typeof window !== 'undefined';
+
 const Membership = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -104,7 +106,7 @@ const Membership = () => {
                     toast("Customer created.");
 
                     // Ensure Paystack is available only in the client
-                    if (typeof window !== 'undefined') {
+                    if (isBrowser()) {
                         const handler = PaystackPop.setup({
                             key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
                             email: user?.emailAddresses[0].emailAddress!,
@@ -166,7 +168,7 @@ const Membership = () => {
                                         </svg>
                                         {featureItem}
                                     </li>
-                                ))} 
+                                ))}
                             </ul>
                             <div className="flex-1 flex items-end">
                                 <Button
