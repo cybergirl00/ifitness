@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 
 
 const Membership = dynamic(() => import('@/components/Membership'), { ssr: false });
+
 const Home = () => {
   return (
     <div>

@@ -75,7 +75,7 @@ const UsersTable = () => {
                 <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                   2023-06-23
                 </TableCell>
-                <TableCell className={`text-right ${sub?.subscription === 'Premium Plan' && 'text-yellow-500 font-bold' || sub?.subscription === 'Medium Plan' && 'text-green-500' || sub?.subscription === 'Basic Plan' && 'text-primary' }`}>
+                <TableCell className={`text-right ${sub?.subscription === 'Premium Plan' && 'text-yellow-500 font-bold' || sub?.subscription === 'Medium Plan' && 'text-green-500' || sub?.subscription === 'Basic plan' && 'text-primary' }`}>
                 <Link href={`/subscription/${sub?.subcode}`}>
                     {sub?.subscription}
                     </Link>

@@ -10,8 +10,9 @@ import { Loader } from "lucide-react";
 import PaystackPop from '@paystack/inline-js';
 import UserSubscription from "./UserSubscription";
 import { nigerianCurrencyFormat } from "@/data";
+import dynamic from "next/dynamic";
 
-const isBrowser = () => typeof window !== 'undefined';
+const Membership = dynamic(() => import('@/components/Membership'), { ssr: false });
 
 
 
