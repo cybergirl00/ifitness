@@ -166,7 +166,7 @@ const Membership = () => {
                                         </svg>
                                         {featureItem}
                                     </li>
-                                ))}
+                                ))} 
                             </ul>
                             <div className="flex-1 flex items-end">
                                 <Button
