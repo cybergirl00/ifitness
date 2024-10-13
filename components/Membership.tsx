@@ -102,31 +102,30 @@ const Membership = () => {
                     headers: { 'Content-Type': 'application/json' },
                 });
 
-                if (customerResponse.ok) {
-                    toast("Customer created.");
-
+                // if (customerResponse.ok) {
+                    // toast("Customer created.");
                     // Ensure Paystack is available only in the client
-                    if (isBrowser()) {
-                        const handler = PaystackPop.setup({
-                            key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-                            email: user?.emailAddresses[0].emailAddress!,
-                            amount: price * 100, // Convert to kobo
-                            currency: 'NGN',
-                            callback: async (response: any) => {
-                                const reference = response.reference;
-                                await onSuccess(planCode, planName);
-                            },
-                            onClose: () => {
-                                toast.error("Payment was not completed.");
-                                setIsLoading(false);
-                            },
-                        });
+                //     if (isBrowser()) {
+                //         const handler = PaystackPop.setup({
+                //             key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+                //             email: user?.emailAddresses[0].emailAddress!,
+                //             amount: price * 100, // Convert to kobo
+                //             currency: 'NGN',
+                //             callback: async (response: any) => {
+                //                 const reference = response.reference;
+                //                 await onSuccess(planCode, planName);
+                //             },
+                //             onClose: () => {
+                //                 toast.error("Payment was not completed.");
+                //                 setIsLoading(false);
+                //             },
+                //         });
 
-                        handler.openIframe();
-                    }
-                } else {
-                    toast.error("Failed to create customer.");
-                }
+                //         handler.openIframe();
+                //     }
+                // } else {
+                //     toast.error("Failed to create customer.");
+                // }
             } else {
                 router.push('/sign-in');
                 toast.error("User not found! Please sign in.");
