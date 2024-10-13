@@ -13,6 +13,8 @@ import { nigerianCurrencyFormat } from "@/data";
 
 const isBrowser = () => typeof window !== 'undefined';
 
+
+
 const Membership = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -103,38 +105,39 @@ const Membership = () => {
                 });
                 if (customerResponse.ok) {
                     toast("Customer created.");
-                    // Ensure Paystack is available only in the client
-                    if (isBrowser()) {
-                        const handler = PaystackPop.setup({
-                            key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-                            email: user?.emailAddresses[0].emailAddress!,
-                            amount: price * 100, // Convert to kobo
-                            currency: 'NGN',
-                            callback: async (response: any) => {
-                                const reference = response.reference;
+
+                    try {
+                        const paystack = new PaystackPop();
+                        paystack.newTransaction({
+                            key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY, // Paystack public key
+                            email: user?.emailAddresses[0]?.emailAddress,
+                            amount: price * 100, // Amount in kobo
+                            onSuccess: async (transaction) => {
+                                // Payment was successful, trigger onSuccess with the selected plan and plan code
                                 await onSuccess(planCode, planName);
+                                toast.success("Payment successful!");
                             },
-                            onClose: () => {
-                                toast.error("Payment was not completed.");
-                                setIsLoading(false);
+                            onCancel: () => {
+                                toast.error("Payment cancelled.");
                             },
                         });
+                      } catch (error) {
+                        console.error('Error:', error);
+                      }
+                    
 
-                        handler.openIframe();
-                    }
+
+                   }
                 } else {
                     toast.error("Failed to create customer.");
                 }
-            } else {
-                router.push('/sign-in');
-                toast.error("User not found! Please sign in.");
-            }
+           
         } catch (error) {
             toast.error(`Failed to create customer. ${error}`);
         } finally {
             setIsLoading(false);
-        }
-    };
+        } 
+    }
 
     if (user && userdb && userdb?.subscription !== 'standard') return <UserSubscription userdb={userdb} />;
 
