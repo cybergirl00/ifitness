@@ -105,7 +105,6 @@ const Membership = () => {
                 });
                 if (customerResponse.ok) {
                     toast("Customer created.");
-
                     try {
                         const paystack = new PaystackPop();
                         paystack.newTransaction({
