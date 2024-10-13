@@ -8,11 +8,11 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Loader } from "lucide-react";
 import PaystackPop from '@paystack/inline-js';
-import UserSubscription from "./UserSubscription";
+// import UserSubscription from "./UserSubscription";
 import { nigerianCurrencyFormat } from "@/data";
 import dynamic from "next/dynamic";
 
-const Membership = dynamic(() => import('@/components/Membership'), { ssr: false });
+const UserSubscription = dynamic(() => import('@/components/UserSubscription'), { ssr: false });
 
 
 
